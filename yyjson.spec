@@ -1,18 +1,13 @@
-%global forgeurl https://github.com/ibireme/yyjson
-Version:        0.9.0
-%global tag %{version}
-%forgemeta
-
 Name:           yyjson
-Release:        %autorelease
+Release:        1
+Version:        0.10.0
 Summary:        A high performance JSON library written in ANSI C
 License:        MIT
-URL:            %{forgeurl}
-Source0:        %{forgesource}
+URL:            https://github.com/ibireme/yyjson
+Source0:        https://github.com/ibireme/yyjson/archive/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:  gcc-c++
 BuildRequires:  cmake
-BuildRequires:  ninja-build
+BuildRequires:  ninja
 
 %description
 A high performance JSON library written in ANSI C.
@@ -39,7 +34,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 This package contains development files for %{name}.
 
 %prep
-%forgeautosetup -p1
+%autosetup -p1
 
 # https://github.com/ibireme/yyjson/issues/154
 sed -i '/-Werror/d' CMakeLists.txt
@@ -50,13 +45,10 @@ sed -i '/-Werror/d' CMakeLists.txt
     -DCMAKE_BUILD_TYPE=Release \
     -DYYJSON_BUILD_TESTS=ON \
 
-%cmake_build
+%ninja -C build
 
 %install
-%cmake_install
-
-%check
-%ctest
+%ninja_install -C build
 
 %files
 %license LICENSE
@@ -68,6 +60,3 @@ sed -i '/-Werror/d' CMakeLists.txt
 %{_libdir}/libyyjson.so
 %{_libdir}/cmake/yyjson/
 %{_libdir}/pkgconfig/yyjson.pc
-
-%changelog
-%autochangelog
