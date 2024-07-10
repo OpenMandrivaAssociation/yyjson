@@ -1,3 +1,6 @@
+%define libname %mklibname yyjson
+%define devname %mklibname yyjson -d
+
 Name:           yyjson
 Release:        1
 Version:        0.10.0
@@ -25,11 +28,20 @@ null-terminated strings.
 and JSON Merge Patch.
 - Developer-Friendly: easy integration with only one h and one c file.
 
-%package        devel
-Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+%package -n %{libname}
+Summary:	Library for yyjsom
+Group:		System/Libraries
+Provides:    yyjson = %{EVRD}
 
-%description    devel
+%description -n %{libname}
+This package contains library files for %{name}.
+
+%package -n %{devname}
+Summary:        Development files for %{name}
+Requires:	%{libname} = %{EVRD}
+Provides:    yyjson-devel = %{EVRD}
+
+%description -n	%{devname}
 This package contains development files for %{name}.
 
 %prep
@@ -48,12 +60,12 @@ sed -i '/-Werror/d' CMakeLists.txt
 %install
 %make_install -C build
 
-%files
+%files -n %{libname}
 %license LICENSE
 %doc README.md
 %{_libdir}/libyyjson.so.0*
 
-%files devel
+%files -n %{devname}
 %{_includedir}/yyjson.h
 %{_libdir}/libyyjson.so
 %{_libdir}/cmake/yyjson/
