@@ -7,7 +7,6 @@ URL:            https://github.com/ibireme/yyjson
 Source0:        https://github.com/ibireme/yyjson/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake
-BuildRequires:  ninja
 
 %description
 A high performance JSON library written in ANSI C.
@@ -41,14 +40,13 @@ sed -i '/-Werror/d' CMakeLists.txt
 
 %build
 %cmake \
-    -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DYYJSON_BUILD_TESTS=ON \
+    -DYYJSON_BUILD_TESTS=ON
 
-%ninja -C build
+%make_build
 
 %install
-%ninja_install -C build
+%make_install -C build
 
 %files
 %license LICENSE
