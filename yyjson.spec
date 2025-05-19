@@ -3,7 +3,7 @@
 
 Name:           yyjson
 Release:        1
-Version:        0.10.0
+Version:        0.11.1
 Summary:        A high performance JSON library written in ANSI C
 License:        MIT
 URL:            https://github.com/ibireme/yyjson
